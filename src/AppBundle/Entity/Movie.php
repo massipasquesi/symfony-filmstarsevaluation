@@ -33,6 +33,11 @@ class Movie
     private $year;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $evaluations;
+
+    /**
      * @ORM\OneToMany(
      *      targetEntity="Star",
      *      mappedBy="post",
