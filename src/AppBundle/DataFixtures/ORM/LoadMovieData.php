@@ -59,6 +59,7 @@ class LoadUserData implements FixtureInterface
             array('Forrest Gump', 'Robert Zemeckis', '1994', 0),
             array('La ligne verte', 'Frank Darabont', '2000', 0),
             array('Django Unchained', 'Quentin Tarantino', '2013', 0),
+            array('Rain Man', 'Barry Levinson', '1988', 0),
         );
 
         foreach ($movieDemoFixtures as $index => $movie_row) {
