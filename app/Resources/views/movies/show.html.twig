@@ -8,8 +8,11 @@
                 <h1>Movie Show</h1>
             </div>
 
-            <div id="movie_list">
+            <div id="movie_shown">
                 <p>This is the MOVIE shown</p>
+                {{ form_start(form, {'attr': {'class': 'fse-form'} }) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
             </div>
 
         </div>
