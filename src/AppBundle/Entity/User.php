@@ -4,11 +4,12 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -25,17 +26,17 @@ class User
     /**
      * @ORM\Column(type="string")
      */
-    private $first_name;
+    private $firstName;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $family_name;
+    private $lastName;
 
     /**
      * @ORM\Column(type="string")
      */
-    private $nick_name;
+    private $username;
 
     /**
      * @ORM\Column(type="string")
@@ -47,28 +48,85 @@ class User
      */
     private $email;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isActive;
+
      /**
      * @ORM\Column(type="datetime")
      */
-    private $date_inscription;
+    private $dateCreation;
 
     /**
-     * @ORM\OneToMany(
-     *      targetEntity="Movie",
-     *      mappedBy="post",
-     *      orphanRemoval=true
-     * )
-     * @ORM\OrderBy({"publishedAt" = "ASC"})
+     * @ORM\Column(type="datetime")
      */
-    private $movies;
+    private $dateModification;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="user", cascade={"persist"})
+     */
+    private $evaluations;
+
 
     public function __construct()
     {
-        $this->publishedAt = new \DateTime();
-        $this->movies = new ArrayCollection();
+        $this->avatar = 'avatar';
+        $this->dateCreation = new \DateTime();
+        $this->dateModification = new \DateTime();
+        $this->isActive = true;
+        $this->evaluations = new ArrayCollection();
     }
 
-    // getters and setters ...
+    public function eraseCredentials()
+    {
+    }
+
+    /** 
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    /** 
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+        ) = unserialize($serialized);
+    }
+
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+
 
     /**
      * Get id
@@ -113,7 +171,7 @@ class User
      */
     public function setFirstName($firstName)
     {
-        $this->first_name = $firstName;
+        $this->firstName = $firstName;
 
         return $this;
     }
@@ -125,55 +183,45 @@ class User
      */
     public function getFirstName()
     {
-        return $this->first_name;
+        return $this->firstName;
     }
 
     /**
-     * Set familyName
+     * Set lastName
      *
-     * @param string $familyName
+     * @param string $lastName
      *
      * @return User
      */
-    public function setFamilyName($familyName)
+    public function setLastName($lastName)
     {
-        $this->family_name = $familyName;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
     /**
-     * Get familyName
+     * Get lastName
      *
      * @return string
      */
-    public function getFamilyName()
+    public function getLastName()
     {
-        return $this->family_name;
+        return $this->lastName;
     }
 
     /**
-     * Set nickName
+     * Set username
      *
-     * @param string $nickName
+     * @param string $username
      *
      * @return User
      */
-    public function setNickName($nickName)
+    public function setUsername($username)
     {
-        $this->nick_name = $nickName;
+        $this->username = $username;
 
         return $this;
-    }
-
-    /**
-     * Get nickName
-     *
-     * @return string
-     */
-    public function getNickName()
-    {
-        return $this->nick_name;
     }
 
     /**
@@ -188,16 +236,6 @@ class User
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Get password
-     *
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
     }
 
     /**
@@ -225,60 +263,108 @@ class User
     }
 
     /**
-     * Set dateInscription
+     * Set isActive
      *
-     * @param \DateTime $dateInscription
+     * @param boolean $isActive
      *
      * @return User
      */
-    public function setDateInscription($dateInscription)
+    public function setIsActive($isActive)
     {
-        $this->date_inscription = $dateInscription;
+        $this->isActive = $isActive;
 
         return $this;
     }
 
     /**
-     * Get dateInscription
+     * Get isActive
+     *
+     * @return boolean
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return User
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
      *
      * @return \DateTime
      */
-    public function getDateInscription()
+    public function getDateCreation()
     {
-        return $this->date_inscription;
+        return $this->dateCreation;
     }
 
     /**
-     * Add movie
+     * Set dateModification
      *
-     * @param \AppBundle\Entity\Movie $movie
+     * @param \DateTime $dateModification
      *
      * @return User
      */
-    public function addMovie(\AppBundle\Entity\Movie $movie)
+    public function setDateModification($dateModification)
     {
-        $this->movies[] = $movie;
+        $this->dateModification = $dateModification;
 
         return $this;
     }
 
     /**
-     * Remove movie
+     * Get dateModification
      *
-     * @param \AppBundle\Entity\Movie $movie
+     * @return \DateTime
      */
-    public function removeMovie(\AppBundle\Entity\Movie $movie)
+    public function getDateModification()
     {
-        $this->movies->removeElement($movie);
+        return $this->dateModification;
     }
 
     /**
-     * Get movies
+     * Add evaluation
+     *
+     * @param \AppBundle\Entity\Evaluation $evaluation
+     *
+     * @return User
+     */
+    public function addEvaluation(\AppBundle\Entity\Evaluation $evaluation)
+    {
+        $this->evaluations[] = $evaluation;
+
+        return $this;
+    }
+
+    /**
+     * Remove evaluation
+     *
+     * @param \AppBundle\Entity\Evaluation $evaluation
+     */
+    public function removeEvaluation(\AppBundle\Entity\Evaluation $evaluation)
+    {
+        $this->evaluations->removeElement($evaluation);
+    }
+
+    /**
+     * Get evaluations
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getMovies()
+    public function getEvaluations()
     {
-        return $this->movies;
+        return $this->evaluations;
     }
 }

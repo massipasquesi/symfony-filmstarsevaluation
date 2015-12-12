@@ -1,5 +1,4 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
 
     <div id="wrapper">
@@ -8,17 +7,17 @@
                 <h1>Movie List</h1>
             </div>
 
-            <div id="movie_list">
+            <table id="movie_list">
                 {% for movie in movies %}
                     <tr>
                         <td>{{ movie.id }}</td>
                         <td>{{ movie.title }}</td>
-                        <td>{{ user.directeur }}</td>
-                        <td>{{ user.year }}</td>
-                        <td>{{ user.evaluations }}</td>
+                        <td>{{ movie.directeur }}</td>
+                        <td>{{ movie.year }}</td>
+                        <td>{{ movie.evaluations }}</td>
                     </tr>
                 {% endfor %}
-            </div>
+            </table>
 
         </div>
     </div>

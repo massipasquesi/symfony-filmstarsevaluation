@@ -1,6 +1,6 @@
 <?php
 
-namespace Massi\Tools;
+namespace AppBundle\Tools;
 
 class Slugger
 {

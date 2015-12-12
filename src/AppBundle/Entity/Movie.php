@@ -11,6 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Movie
 {
     /**
+     * Number of items to show in a page list
+     */
+    const NUM_ITEMS = 10;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -33,7 +38,7 @@ class Movie
     private $year;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="movie", cascade={"persist"})
      */
     private $evaluations;
 
@@ -41,10 +46,10 @@ class Movie
     public function __construct()
     {
         $this->publishedAt = new \DateTime();
-        $this->stars = new ArrayCollection();
+        $this->evaluations = new ArrayCollection();
     }
 
-    // getters and setters ...
+    
 
     /**
      * Get id
@@ -129,23 +134,33 @@ class Movie
     }
 
     /**
-     * Set evaluations
+     * Add evaluation
      *
-     * @param integer $evaluations
+     * @param \AppBundle\Entity\Evaluation $evaluation
      *
      * @return Movie
      */
-    public function setEvaluations($evaluations)
+    public function addEvaluation(\AppBundle\Entity\Evaluation $evaluation)
     {
-        $this->evaluations = $evaluations;
+        $this->evaluations[] = $evaluation;
 
         return $this;
     }
 
     /**
+     * Remove evaluation
+     *
+     * @param \AppBundle\Entity\Evaluation $evaluation
+     */
+    public function removeEvaluation(\AppBundle\Entity\Evaluation $evaluation)
+    {
+        $this->evaluations->removeElement($evaluation);
+    }
+
+    /**
      * Get evaluations
      *
-     * @return integer
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getEvaluations()
     {
