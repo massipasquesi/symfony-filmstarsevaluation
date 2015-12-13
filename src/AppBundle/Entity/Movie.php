@@ -45,11 +45,14 @@ class Movie
 
     public function __construct()
     {
-        $this->publishedAt = new \DateTime();
         $this->evaluations = new ArrayCollection();
     }
 
-    
+
+
+    /*********************\
+    |* GETTERS & SETTERS *|
+    \*********************/
 
     /**
      * Get id

@@ -36,6 +36,11 @@ class Evaluation
      */
     private $stars;
 
+
+    /*********************\
+    |* GETTERS & SETTERS *|
+    \*********************/
+
     /**
      * Get id
      *

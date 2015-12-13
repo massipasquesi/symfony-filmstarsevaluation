@@ -3,25 +3,35 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
  * @ORM\Entity
+ * @Vich\Uploadable
  */
-class User implements UserInterface, \Serializable
+class User extends BaseUSer
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @Vich\UploadableField(mapping="avatar", fileNameProperty="avatarName")
+     * @var File
      */
-    private $avatar;
+    private $avatarFile;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @var string
+     */
+    private $avatarName;
 
     /**
      * @ORM\Column(type="string")
@@ -34,34 +44,14 @@ class User implements UserInterface, \Serializable
     private $lastName;
 
     /**
-     * @ORM\Column(type="string")
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isActive;
-
-     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateCreation;
+    protected $dateCreation;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $dateModification;
+    protected $updatedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="user", cascade={"persist"})
@@ -73,13 +63,9 @@ class User implements UserInterface, \Serializable
     {
         $this->avatar = 'avatar';
         $this->dateCreation = new \DateTime();
-        $this->dateModification = new \DateTime();
+        $this->updatedAt = new \DateTime();
         $this->isActive = true;
         $this->evaluations = new ArrayCollection();
-    }
-
-    public function eraseCredentials()
-    {
     }
 
     /** 
@@ -106,60 +92,53 @@ class User implements UserInterface, \Serializable
         ) = unserialize($serialized);
     }
 
-    public function getUsername()
-    {
-        return $this->username;
-    }
 
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return array('ROLE_USER');
-    }
-
-
+    /*********************\
+    |* GETTERS & SETTERS *|
+    \*********************/
 
     /**
-     * Get id
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the  update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
      *
-     * @return integer
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function getId()
+    public function setAvatarFile(File $avatarFile = null)
     {
-        return $this->id;
+        $this->avatarFile = $avatarFile;
+
+        if ($avatarFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTime('now');
+        }
     }
 
     /**
-     * Set avatar
-     *
-     * @param string $avatar
-     *
-     * @return User
+     * @return File
      */
-    public function setAvatar($avatar)
+    public function getAvatarFile()
     {
-        $this->avatar = $avatar;
-
-        return $this;
+        return $this->avatarFile;
     }
 
     /**
-     * Get avatar
-     *
+     * @param string $imageName
+     */
+    public function setAvatarName($avatarName)
+    {
+        $this->avatarName = $imageName;
+    }
+
+    /**
      * @return string
      */
-    public function getAvatar()
+    public function getAvatarName()
     {
-        return $this->avatar;
+        return $this->avatarName;
     }
 
     /**
@@ -208,82 +187,6 @@ class User implements UserInterface, \Serializable
     public function getLastName()
     {
         return $this->lastName;
-    }
-
-    /**
-     * Set username
-     *
-     * @param string $username
-     *
-     * @return User
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
-     * Set password
-     *
-     * @param string $password
-     *
-     * @return User
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     *
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * Set isActive
-     *
-     * @param boolean $isActive
-     *
-     * @return User
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-
-        return $this;
-    }
-
-    /**
-     * Get isActive
-     *
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
     }
 
     /**
