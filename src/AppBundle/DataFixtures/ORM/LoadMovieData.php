@@ -19,41 +19,13 @@ class LoadMovieData extends EasyDemoFixtures implements OrderedFixtureInterface
         return new Movie();
     }
 
-    /**
-     * [defineKeyMapper description]
-     * @return [type] [description]
-     */
-    protected function defineKeyMapper()
+    protected function declareHeader()
     {
-        $this->keyMapper = array(
+        $this->header = array(
             'title',
             'directeur',
             'year',
         );
-    }
-
-    /**
-     * [defineDemoFixtures description]
-     * @return [type] [description]
-     */
-    protected function defineDemoFixtures()
-    {
-        $this->demoFixtures = array(
-            array('Forrest Gump', 'Robert Zemeckis', '1994'),
-            array('La ligne verte', 'Frank Darabont', '2000'),
-            array('Django Unchained', 'Quentin Tarantino', '2013'),
-            array('Rain Man', 'Barry Levinson', '1988'),
-        );
-    }
-
-    /**
-     * [load description]
-     * @param  ObjectManager $manager [description]
-     * @return [type]                 [description]
-     */
-    public function load(ObjectManager $manager)
-    {
-        $this->easyLoad($manager);
     }
 
     public function getOrder()

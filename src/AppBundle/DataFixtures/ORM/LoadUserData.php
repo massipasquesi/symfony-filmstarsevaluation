@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
 
-class LoadUserData extends EasyDemoFixtures implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadUserData extends LoadFixturesMaster
 {
 
     /**
@@ -35,57 +35,17 @@ class LoadUserData extends EasyDemoFixtures implements OrderedFixtureInterface, 
         return new User();
     }
 
-    /**
-     * [defineKeyMapper description]
-     * @return [type] [description]
-     */
-    protected function defineKeyMapper()
+
+    protected function declareHeader()
     {
-        $this->keyMapper = array(
+        $this->header = array(
+            'avatar' => 'file',
             'firstName',
             'lastName',
             'username',
             'email',
-            'password',
+            'password' => 'password',
         );
-    }
-
-    /**
-     * [defineDemoFixtures description]
-     * @return [type] [description]
-     */
-    protected function defineDemoFixtures()
-    {
-        $this->demoFixtures = array(
-            array('massi', 'zero', 'massizero', 'massizero@yopmail.com', 'pmassi001'),
-            array('user', 'one', 'user1one', 'user1one@yopmail.com', 'puserone100'),
-            array('user', 'two', 'user2two', 'user2two@yopmail.com', 'pusertwo200'),
-            array('user', 'three', 'user3three', 'user3three@yopmail.com', 'puserthree300'),
-        );
-    }
-
-    /**
-     * [load description]
-     * @param  ObjectManager $manager [description]
-     * @return [type]                 [description]
-     */
-    public function load(ObjectManager $manager)
-    {
-        $special = array('password' => 'encodePassword');
-        $this->easyLoad($manager, $special);
-    }
-
-    /**
-     * [encodePassword description]
-     * @param  [type] $password [description]
-     * @return [type]           [description]
-     */
-    protected function encodePassword(User $userObject, &$password)
-    {
-        $encoder = $this->container->get('security.password_encoder');
-        $password = $encoder->encodePassword($userObject, $password);
-
-        return $password;
     }
 
     public function getOrder()
@@ -93,7 +53,18 @@ class LoadUserData extends EasyDemoFixtures implements OrderedFixtureInterface, 
         return 2;
     }
 
-    
+    /**
+     * [setPasswordType description]
+     * @param [type] $var   [description]
+     * @param [type] $value [description]
+     */
+    protected function setPasswordType($var, $value)
+    {
+        $encoder = $this->container->get('security.password_encoder');
+        $this->setVar($var, $encoder->encodePassword($this, $value));
+
+        return $value;
+    }
 
     
 
