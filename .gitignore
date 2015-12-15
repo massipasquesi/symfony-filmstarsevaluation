@@ -10,3 +10,6 @@
 /vendor/
 /web/bundles/
 *.php~
+*.standby
+/web/upload/avatars/
+!/web/upload/avatars/.gitkeep
