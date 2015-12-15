@@ -38,6 +38,12 @@ class Movie
     private $year;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\JoinColumn(nullable=false)
+    */
+    private $category;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Evaluation", mappedBy="movie", cascade={"persist"})
      */
     private $evaluations;
@@ -53,6 +59,7 @@ class Movie
     /*********************\
     |* GETTERS & SETTERS *|
     \*********************/
+
 
     /**
      * Get id
@@ -134,6 +141,30 @@ class Movie
     public function getYear()
     {
         return $this->year;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Movie
+     */
+    public function setCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**

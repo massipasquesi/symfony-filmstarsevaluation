@@ -40,6 +40,7 @@ class Evaluation
     /*********************\
     |* GETTERS & SETTERS *|
     \*********************/
+    
 
     /**
      * Get id

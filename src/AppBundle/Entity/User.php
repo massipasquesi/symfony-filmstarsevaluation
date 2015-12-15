@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 
 /**
  * @ORM\Entity
@@ -58,46 +58,32 @@ class User extends BaseUSer
      */
     private $evaluations;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserChoiceCategory", mappedBy="user", cascade={"persist"})
+     */
+    private $categoriesChoices;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\AgeRange")
+    */
+    private $ageRange;
+
 
     public function __construct()
     {
-        $this->avatar = 'avatar';
-        $this->dateCreation = new \DateTime();
+        if(empty($this->dateCreation)) {
+            $this->dateCreation = new \DateTime();
+        }
+            
         $this->updatedAt = new \DateTime();
         $this->isActive = true;
         $this->evaluations = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+
+        parent::__construct();
     }
 
-    /** 
-     * @see \Serializable::serialize()
-     */
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->username,
-            $this->password,
-        ));
-    }
-
-    /** 
-     * @see \Serializable::unserialize()
-     */
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->username,
-            $this->password,
-        ) = unserialize($serialized);
-    }
-
-
-    /*********************\
-    |* GETTERS & SETTERS *|
-    \*********************/
-
-    /**
+     /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the  update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -106,11 +92,11 @@ class User extends BaseUSer
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      */
-    public function setAvatarFile(File $avatarFile = null)
+    public function setAvatarFile(File $avatar = null)
     {
-        $this->avatarFile = $avatarFile;
+        $this->avatarFile = $avatar;
 
-        if ($avatarFile) {
+        if ($avatar) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTime('now');
@@ -125,15 +111,25 @@ class User extends BaseUSer
         return $this->avatarFile;
     }
 
+
+
     /**
-     * @param string $imageName
+     * Set avatarName
+     *
+     * @param string $avatarName
+     *
+     * @return User
      */
     public function setAvatarName($avatarName)
     {
-        $this->avatarName = $imageName;
+        $this->avatarName = $avatarName;
+
+        return $this;
     }
 
     /**
+     * Get avatarName
+     *
      * @return string
      */
     public function getAvatarName()
@@ -214,27 +210,27 @@ class User extends BaseUSer
     }
 
     /**
-     * Set dateModification
+     * Set updatedAt
      *
-     * @param \DateTime $dateModification
+     * @param \DateTime $updatedAt
      *
      * @return User
      */
-    public function setDateModification($dateModification)
+    public function setUpdatedAt($updatedAt)
     {
-        $this->dateModification = $dateModification;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
     /**
-     * Get dateModification
+     * Get updatedAt
      *
      * @return \DateTime
      */
-    public function getDateModification()
+    public function getUpdatedAt()
     {
-        return $this->dateModification;
+        return $this->updatedAt;
     }
 
     /**
@@ -269,5 +265,63 @@ class User extends BaseUSer
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    /**
+     * Add categoriesChoice
+     *
+     * @param \AppBundle\Entity\UserChoiceCategory $categoriesChoice
+     *
+     * @return User
+     */
+    public function addCategoriesChoice(\AppBundle\Entity\UserChoiceCategory $categoriesChoice)
+    {
+        $this->categoriesChoices[] = $categoriesChoice;
+
+        return $this;
+    }
+
+    /**
+     * Remove categoriesChoice
+     *
+     * @param \AppBundle\Entity\UserChoiceCategory $categoriesChoice
+     */
+    public function removeCategoriesChoice(\AppBundle\Entity\UserChoiceCategory $categoriesChoice)
+    {
+        $this->categoriesChoices->removeElement($categoriesChoice);
+    }
+
+    /**
+     * Get categoriesChoices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategoriesChoices()
+    {
+        return $this->categoriesChoices;
+    }
+
+    /**
+     * Set ageRange
+     *
+     * @param \AppBundle\Entity\AgeRange $ageRange
+     *
+     * @return User
+     */
+    public function setAgeRange(\AppBundle\Entity\AgeRange $ageRange = null)
+    {
+        $this->ageRange = $ageRange;
+
+        return $this;
+    }
+
+    /**
+     * Get ageRange
+     *
+     * @return \AppBundle\Entity\AgeRange
+     */
+    public function getAgeRange()
+    {
+        return $this->ageRange;
     }
 }
