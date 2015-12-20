@@ -23,11 +23,9 @@ class RegistrationController extends Controller
         /*****************************************************
          * Add List of Movies with possibility to evaluate  *
          *****************************************************/
-        $mqb = $this->getDoctrine()
+        $movies_ids = $this->getDoctrine()
                 ->getRepository('AppBundle:Movie')
-                ->getMoviesIdsListQueryBuilder();
-
-        $movies_ids = $mqb->getQuery()->getArrayResult();
+                ->getMoviesIdsList();
         
         foreach ($movies_ids as $i => $id) {
             $evaluation[$i] = new Evaluation();

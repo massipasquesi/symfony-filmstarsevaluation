@@ -15,4 +15,10 @@ class MovieRepository extends EntityRepository
             ->orderBy('m.id', 'ASC')
             ->setMaxResults(Movie::NUM_ITEMS);
     }
+
+    public function getMoviesIdsList()
+    {
+        return $this->getMoviesIdsListQueryBuilder()
+            ->getQuery()->getArrayResult();
+    }
 }
