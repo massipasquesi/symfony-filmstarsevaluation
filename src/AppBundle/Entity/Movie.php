@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\MovieRepository")
  */
 class Movie
 {
@@ -38,7 +38,7 @@ class Movie
     private $year;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Category", inversedBy="movies")
      * @ORM\JoinColumn(nullable=false)
     */
     private $category;
@@ -52,6 +52,11 @@ class Movie
     public function __construct()
     {
         $this->evaluations = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->title;
     }
 
 

@@ -11,6 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Evaluation
 {
     /**
+     * Nombre Max de Stars pour une Evaluation
+     */
+    const STARS_NUMBER = 5;
+
+    /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -30,18 +35,15 @@ class Evaluation
     private $movie;
 
     /**
+     * @ORM\Column(name="stars", type="smallint", options={"default":0, "unsigned":true, })
      * @var int $stars
-     *
-     * @ORM\Column(name="stars", type="smallint")
      */
-    private $stars;
+    private $stars = 0;
 
 
     /*********************\
     |* GETTERS & SETTERS *|
     \*********************/
-    
-
     /**
      * Get id
      *

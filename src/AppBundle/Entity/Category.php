@@ -27,9 +27,14 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UserChoiceCategory", mappedBy="category", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Movie", mappedBy="category")
      */
-    private $usersChoices;
+    private $movies;
+
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="categories")
+     */
+    private $users;
 
 
 
@@ -42,7 +47,8 @@ class Category
      */
     public function __construct()
     {
-        $this->usersChoices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->movies = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     /**
@@ -94,36 +100,97 @@ class Category
     }
 
     /**
-     * Add usersChoice
+     * Add movie
      *
-     * @param \AppBundle\Entity\UserChoiceCategory $usersChoice
+     * @param \AppBundle\Entity\Movie $movie
      *
      * @return Category
      */
-    public function addUsersChoice(\AppBundle\Entity\UserChoiceCategory $usersChoice)
+    public function addMovie(\AppBundle\Entity\Movie $movie)
     {
-        $this->usersChoices[] = $usersChoice;
+        $this->movies[] = $movie;
+
+        // On lie la Category au Movie
+        $movie->setCategory($this);
 
         return $this;
     }
 
     /**
-     * Remove usersChoice
+     * Remove movie
      *
-     * @param \AppBundle\Entity\UserChoiceCategory $usersChoice
+     * @param \AppBundle\Entity\Movie $movie
      */
-    public function removeUsersChoice(\AppBundle\Entity\UserChoiceCategory $usersChoice)
+    public function removeMovie(\AppBundle\Entity\Movie $movie)
     {
-        $this->usersChoices->removeElement($usersChoice);
+        /**
+         * Commenter si la relation est facultative
+         * Decommenter si la relation est obligatoire
+         */
+        // $this->movies->removeElement($movie);
+
+        /**
+         * Commenter si la relation est obligatoire
+         * Decommenter si la relation est facultative
+         */
+        $movie->setCategory(null);
     }
 
     /**
-     * Get usersChoices
+     * Get movies
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsersChoices()
+    public function getMovies()
     {
-        return $this->usersChoices;
+        return $this->movies;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Category
+     */
+    public function addUser(\AppBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        // On lie la Category à User
+        $user->setCategory($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \AppBundle\Entity\User $user
+     */
+    public function removeUser(\AppBundle\Entity\User $user)
+    {
+        /**
+         * Commenter si la relation est facultative
+         * Decommenter si la relation est obligatoire
+         */
+        //  $this->users->removeElement($user);
+
+        /**
+         * Commenter si la relation est obligatoire
+         * Decommenter si la relation est facultative
+         */
+        $user->setCategory(null);
+
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
