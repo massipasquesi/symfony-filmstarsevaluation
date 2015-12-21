@@ -36,12 +36,6 @@ class Category
      */
     private $users;
 
-
-
-    /*********************\
-    |* GETTERS & SETTERS *|
-    \*********************/
-
     /**
      * Constructor
      */
@@ -50,6 +44,18 @@ class Category
         $this->movies = new ArrayCollection();
         $this->users = new ArrayCollection();
     }
+
+    /**
+     * @return string [description]
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /*********************\
+    |* GETTERS & SETTERS *|
+    \*********************/
 
     /**
      * Set id

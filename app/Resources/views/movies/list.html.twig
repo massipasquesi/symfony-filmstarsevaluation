@@ -4,17 +4,28 @@
     <div id="wrapper">
         <div id="container">
             <div id="title">
-                <h1>Movie List</h1>
+                <h1>Liste de Films</h1>
             </div>
 
             <table id="movie_list">
+                <tr>
+                    <th>Titre</th>
+                    <th>Realisateur</th>
+                    <th>Année</th>
+                    <th>Categorie</th>
+                    <th>Evaluations</th>
+                </tr>
                 {% for movie in movies %}
                     <tr>
-                        <td>{{ movie.id }}</td>
                         <td>{{ movie.title }}</td>
                         <td>{{ movie.directeur }}</td>
                         <td>{{ movie.year }}</td>
-                        <td>{{ movie.evaluations }}</td>
+                        <td>{{ movie.category }}</td>
+                        <td>
+                            {% for evaluation in movie.evaluations %}
+                                <p>{{evaluation.stars}}</p>
+                            {% endfor %}
+                        </td>
                     </tr>
                 {% endfor %}
             </table>

@@ -1,2 +1,6 @@
-{# renders all fields #}
-{{ form_widget(form) }}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {# renders all fields #}
+    {{ form_widget(form) }}
+{% endblock %}

@@ -25,16 +25,6 @@ class MoviesController extends Controller
     }
 
     /**
-     * @Route("/movies/show/{id}", name="movie_show")
-     */
-    public function moviesShowAction(Movie $movie)
-    {
-        return $this->render('movies/show.html.twig', array(
-            'movie'        => $movie,
-        ));
-    }
-
-    /**
      * @Route("/movies/list", name="movies_list")
      */
     public function moviesListAction()
@@ -46,5 +36,4 @@ class MoviesController extends Controller
 
         return $this->render('movies/list.html.twig', array('movies' => $movies));
     }
-
 }
