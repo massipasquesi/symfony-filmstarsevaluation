@@ -15,6 +15,9 @@ class LoadCategoryData extends LoadFixturesMaster
         array(5, 'Action'),
         array(6, 'Science Fiction'),
         array(7, 'Animation'),
+        array(8, 'Western'),
+        array(9, 'Fantastique'),
+        array(10, 'Thriller'),
     );
 
     /**
@@ -38,7 +41,4 @@ class LoadCategoryData extends LoadFixturesMaster
     {
         return 1;
     }
-
-    
-
 }

@@ -11,9 +11,15 @@ class LoadMovieData extends LoadFixturesMaster
 {
     protected $demoFixturesArray = array(
         array('Forrest Gump', 'Robert Zemeckis', '1994', 2),
-        array('La ligne verte', 'Frank Darabont', '2000', 3),
-        array('Django Unchained', 'Quentin Tarantino', '2013', 4),
+        array('La ligne verte', 'Frank Darabont', '2000', 9),
+        array('Django Unchained', 'Quentin Tarantino', '2013', 8),
         array('Rain Man', 'Barry Levinson', '1988', 3),
+        array('Gran Torino', 'Clint Eastwood', '2009', 3),
+        array('Shindler List', 'Steven Spielberg', '1994', 3),
+        array('Pulp Fiction', 'Quentin Tarantino', '1994', 5),
+        array('Le Seigneur des anneaux : le retour du roi', 'Peter Jackson', '2003', 9),
+        array('Fight Club', 'David Fincher', '1999', 5),
+
     );
 
     /**
@@ -48,7 +54,4 @@ class LoadMovieData extends LoadFixturesMaster
 
         $this->newFObject->setCategory($category);
     }
-
-    
-
 }
