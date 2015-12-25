@@ -24,7 +24,10 @@ Debug::enable();
 require_once __DIR__.'/../app/AppKernel.php';
 
 $kernel = new AppKernel('dev', true);
-$kernel->loadClassCache();
+/**
+ * @todo Decommenter pour re-activer le cache
+ */
+//$kernel->loadClassCache();
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
