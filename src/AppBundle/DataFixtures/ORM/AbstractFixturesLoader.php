@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Exception\AppBundleException as Exception;
 
-abstract class LoadFixturesMaster extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+abstract class AbstractFixturesLoader extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     abstract public function getOrder();
     abstract protected function declareHeader();
@@ -28,18 +28,16 @@ abstract class LoadFixturesMaster extends AbstractFixture implements OrderedFixt
         $this->container = $container;
     }
 
-    public function __call($name , array $arguments){
-
-        if (strpos($name,"set") === 0){
-            $variable = lcfirst(str_replace("set",'',$name));
+    public function __call($name, array $arguments)
+    {
+        if (strpos($name, "set") === 0) {
+            $variable = lcfirst(str_replace("set", '', $name));
             $this->$variable = $arguments[0];
-        }
-        else if (strpos($name,"get") === 0){
-            $variable = lcfirst(str_replace("get",'',$name));
+        } else if (strpos($name, "get") === 0) {
+            $variable = lcfirst(str_replace("get", '', $name));
             return $this->$variable;
-        }
-        else if (strpos($name,"isSet") === 0){
-            $variable = lcfirst(str_replace("isSet",'',$name));
+        } else if (strpos($name, "isSet") === 0) {
+            $variable = lcfirst(str_replace("isSet", '', $name));
             return isset($this->$variable);
         }
     }
@@ -51,7 +49,7 @@ abstract class LoadFixturesMaster extends AbstractFixture implements OrderedFixt
      */
     public function load(ObjectManager $manager)
     {
-        $this->funkyLoad($manager); 
+        $this->funkyLoad($manager);
     }
 
     protected function getDemoFixtures()
@@ -125,5 +123,4 @@ abstract class LoadFixturesMaster extends AbstractFixture implements OrderedFixt
                 break;
         }
     }
-
 }

@@ -2,12 +2,12 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\DataFixtures\ORM\LoadFixturesMaster;
+use AppBundle\DataFixtures\ORM\AbstractFixturesLoader;
 use AppBundle\Entity\Movie;
 use AppBundle\Entity\MovieCategory;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadMovieData extends LoadFixturesMaster
+class LoadMovieData extends AbstractFixturesLoader
 {
     protected $demoFixturesArray = array(
         array('Forrest Gump', 'Robert Zemeckis', '1994', 2),

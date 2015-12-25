@@ -2,10 +2,10 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\DataFixtures\ORM\LoadFixturesMaster;
+use AppBundle\DataFixtures\ORM\AbstractFixturesLoader;
 use AppBundle\Entity\Category;
 
-class LoadCategoryData extends LoadFixturesMaster
+class LoadCategoryData extends AbstractFixturesLoader
 {
     protected $demoFixturesArray = array(
         array(1, 'Comique'),

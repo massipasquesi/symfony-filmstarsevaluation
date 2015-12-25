@@ -2,11 +2,11 @@
 
 namespace AppBundle\DataFixtures\ORM;
 
-use AppBundle\DataFixtures\ORM\LoadFixturesMaster;
+use AppBundle\DataFixtures\ORM\AbstractFixturesLoader;
 use AppBundle\Entity\AgeRange;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class LoadAgeRangeData extends LoadFixturesMaster
+class LoadAgeRangeData extends AbstractFixturesLoader
 {
     protected $demoFixturesArray = array(
         array("0-12"),
@@ -39,6 +39,4 @@ class LoadAgeRangeData extends LoadFixturesMaster
     {
         return 3;
     }
-    
-
 }
