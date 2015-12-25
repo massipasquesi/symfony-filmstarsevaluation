@@ -7,8 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Movie;
 
-use AppBundle\DataFixtures\ORM\LoadMovieData;
-
 class MoviesController extends Controller
 {
     /**
@@ -16,12 +14,7 @@ class MoviesController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $MovieData = new LoadMovieData();
-        $data = $MovieData->getDemoFixtures();
-
-        return $this->render('movies/drafts.html.twig', array(
-            'data' => $data,
-        ));
+        return $this->moviesListAction();
     }
 
     /**

@@ -19,7 +19,7 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'Repeat Password'),
             ));
 
-        $builder->add('avatarFile', 'file');
+        $builder->add('avatar', new AvatarType());
         $builder->add('first_name');
         $builder->add('last_name');
         $builder->add('categories', 'entity', array(
@@ -35,6 +35,8 @@ class UserType extends AbstractType
             'multiple'  => false
         ));
         $builder->add('evaluations', 'collection', array('type' => new MovieEvaluationType()));
+
+        $builder->add('save', 'submit', array('label' => 'Register'));
     }
 
     public function configureOptions(OptionsResolver $resolver)
