@@ -2,6 +2,7 @@
 
 {% block body %}
     {{ form_start(form) }}
-    {{ form_widget(form) }}
+	    {{ form_widget(form) }}
+			{% include ('@vcforms/submit.html.twig') %}
     {{ form_end(form) }}
 {% endblock %}

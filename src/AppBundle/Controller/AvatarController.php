@@ -8,23 +8,23 @@ use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Avatar;
 use AppBundle\Form\AvatarType;
 
-class FilesController extends Controller
+class AvatarController extends Controller
 {
     /**
-     * @Route("/files", name="files")
+     * @Route("/avatar", name="avatar")
      */
     public function indexAction(Request $request)
     {
-        return $this->filesUploadAction();
+        return $this->avatarUploadAction();
     }
 
     /**
-     * @Route("/files/upload", name="files_upload")
+     * @Route("/avatar/upload", name="avatar_upload")
      */
-    public function filesUploadAction(Request $request)
+    public function avatarUploadAction(Request $request)
     {
-        // Build the form
         $avatar = new Avatar();
+        // Build the form
         $form = $this->createForm(new AvatarType(), $avatar);
 
         // Handle the submit
@@ -33,14 +33,14 @@ class FilesController extends Controller
 
             // Save the Avatar!
             $em = $this->getDoctrine()->getManager();
-            $em->persist($avatar);
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirectToRoute('files_upload');
+            return $this->redirectToRoute('avatar');
         }
 
         return $this->render(
-            'files/upload.html.twig',
+            'common/forms/files/upload.html.twig',
             array('form' => $form->createView())
         );
     }

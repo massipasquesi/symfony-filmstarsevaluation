@@ -35,6 +35,10 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
+    paths:
+        "%kernel.root_dir%/../app/Resources/views": vbase
+        "%kernel.root_dir%/../app/Resources/views/common": vcommon
+        "%kernel.root_dir%/../app/Resources/views/common/forms": vcforms
 
 # Assetic Configuration
 assetic:
