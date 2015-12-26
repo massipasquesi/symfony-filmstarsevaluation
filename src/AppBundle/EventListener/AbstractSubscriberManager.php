@@ -9,12 +9,32 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\Common\EventSubscriber;
 use AppBundle\Exception\EventListenerException as Exception;
 
+/**
+ * @author PASQUESI Massimiliano <massipasquesi@gmail.com>
+ */
 abstract class AbstractSubscriberManager implements EventSubscriber
 {
+    /**
+     * [getSubscribedEvents description]
+     * @return [type] [description]
+     */
     abstract public function getSubscribedEvents();
+    /**
+     * Return list of entities that have to listen to event
+     * @return array : list of entities that have to listen to event
+     */
     abstract public function getEntitiesToListen();
+    /**
+     * [callHandlerMethod description]
+     * @param  [type] $event [description]
+     * @return [type]        [description]
+     */
     abstract protected function callHandlerMethod($event);
 
+    /**
+     * [checkEntity description]
+     * @return [type] [description]
+     */
     public function checkEntity()
     {
         $entity_class = get_class($this->entity);
@@ -26,6 +46,12 @@ abstract class AbstractSubscriberManager implements EventSubscriber
         return false;
     }
 
+    /**
+     * [handleEvent description]
+     * @param  LifecycleEventArgs $args
+     * @param  string   $event : event name
+     * @return void : $this->callHandlerMethod($event)
+     */
     protected function handleEvent(LifecycleEventArgs $args, $event)
     {
         $this->entity = $args->getEntity();
@@ -34,12 +60,24 @@ abstract class AbstractSubscriberManager implements EventSubscriber
             return;
         }
 
-        $this->em = $args->getEntityManager();
+        $this->entityMnager = $args->getEntityManager();
 
         $this->callHandlerMethod($event);
     }
 
-    public function __call($name, array $arguments)
+    /**
+     * Here magic method __call is used in place of every event method
+     * like : preUpdate, prePersist, etc...
+     * @example : public function preUpdate(LifecycleEventArgs $args)
+     *            {
+     *                 $this->handleEvent($args, __METHOD__);
+     *            }
+     * @param  string $name : name of the called event function
+     * @param  array  $arguments : function arguments
+     * @throws EventListenerException if $arguments[0] is not instanceof LifecycleEventArgs
+     * @return void : $this->handleEvent($args, __METHOD__)
+     */
+    public function __call($name, Array $arguments)
     {
         if (in_array($name, $this->getSubscribedEvents())) {
             if (! $arguments[0] instanceof LifecycleEventArgs) {
@@ -50,29 +88,4 @@ abstract class AbstractSubscriberManager implements EventSubscriber
             $this->handleEvent($arguments[0], $name);
         }
     }
-
-    // public function preUpdate(LifecycleEventArgs $args)
-    // {
-    //     $this->handleEvent($args, __METHOD__);
-    // }
-
-    // public function prePersist(LifecycleEventArgs $args)
-    // {
-    //     $this->handleEvent($args, __METHOD__);
-    // }
-
-    // public function postUpdate(LifecycleEventArgs $args)
-    // {
-    //     $this->handleEvent($args, __METHOD__);
-    // }
-
-    // public function postPersist(LifecycleEventArgs $args)
-    // {
-    //     $this->handleEvent($args, __METHOD__);
-    // }
-
-    // public function postRemove(LifecycleEventArgs $args)
-    // {
-    //     $this->handleEvent($args, __METHOD__);
-    // }
 }

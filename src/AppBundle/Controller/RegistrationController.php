@@ -55,7 +55,7 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return $this->redirectToRoute('/movies/list');
+            return $this->redirectToRoute('movies_list');
         }
 
         return $this->render(

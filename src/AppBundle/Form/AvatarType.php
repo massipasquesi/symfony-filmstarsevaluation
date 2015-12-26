@@ -11,6 +11,7 @@ class AvatarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('file');
+        $builder->add('save', 'submit', array('label' => 'Save'));
     }
 
     public function configureOptions(OptionsResolver $resolver)
