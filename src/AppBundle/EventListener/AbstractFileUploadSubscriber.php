@@ -13,6 +13,10 @@ namespace AppBundle\EventListener;
  */
 abstract class AbstractFileUploadSubscriber extends AbstractSubscriberManager
 {
+    public function __construct($root_dir)
+    {
+        $this->rootDir = $root_dir . '/../web';
+    }
 
     /**
      * [getSubscribedEvents description]
@@ -160,7 +164,7 @@ abstract class AbstractFileUploadSubscriber extends AbstractSubscriberManager
     {
         // the absolute directory path where uploaded
         // avatars should be saved
-        return $_SERVER["DOCUMENT_ROOT"] . '/' . $this->getUploadDir();
+        return $this->rootDir . '/' . $this->getUploadDir();
     }
 
     protected function getUploadDir()

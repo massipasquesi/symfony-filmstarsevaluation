@@ -23,5 +23,6 @@ services:
     # TRIGGERS #
     app.subscriber.file.upload:
         class: AppBundle\EventListener\FileUploadSubscriber
+        arguments: ['%kernel.root_dir%']
         tags:
             - { name: doctrine.event_subscriber, connection: default }

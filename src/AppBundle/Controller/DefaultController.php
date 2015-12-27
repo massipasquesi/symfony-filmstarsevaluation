@@ -21,10 +21,10 @@ class DefaultController extends Controller
      */
     public function dumpAction()
     {
-        $subscriber = new \AppBundle\EventListener\FileUploadSubscriber();
-        $avatar = new \AppBundle\Entity\Avatar();
+        // $subscriber = new \AppBundle\EventListener\FileUploadSubscriber($this->get('kernel')->getRootDir());
 
-        $data = $subscriber->checkEntity($avatar);
+        // $data = $subscriber->rootDir;
+        $data = $this->get('kernel');
 
         return $this->render('default/dump.html.twig', array(
             'data' => $data,

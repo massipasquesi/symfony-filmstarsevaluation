@@ -15,7 +15,7 @@ class AvatarController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->avatarUploadAction();
+        return $this->avatarUploadAction($request);
     }
 
     /**
@@ -33,7 +33,7 @@ class AvatarController extends Controller
 
             // Save the Avatar!
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($avatar);
             $em->flush();
 
             return $this->redirectToRoute('avatar');
