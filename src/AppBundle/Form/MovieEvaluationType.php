@@ -5,14 +5,14 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use AppBundle\Entity\MovieRepository;
 
 class MovieEvaluationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('movie');
+        $builder->add('movie', 'movie_selector');
         $builder->add('stars', new StarsChoiceType());
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

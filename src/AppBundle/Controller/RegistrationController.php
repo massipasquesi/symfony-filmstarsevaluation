@@ -39,7 +39,8 @@ class RegistrationController extends Controller
          *        END added functionality                    *
          *****************************************************/
 
-        $form = $this->createForm(new UserType(), $user);
+        $em = $this->getDoctrine()->getManager();
+        $form = $this->createForm(new UserType($em), $user);
 
         // Handle the submit
         $form->handleRequest($request);
@@ -51,7 +52,6 @@ class RegistrationController extends Controller
             $user->setPassword($password);
 
             // Save the User!
-            $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
 

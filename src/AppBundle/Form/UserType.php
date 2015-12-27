@@ -5,6 +5,8 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Form\MovieSelectorType;
+use AppBundle\Form\DataTransformer\MovieToStringTransformer;
 
 class UserType extends AbstractType
 {
@@ -36,6 +38,9 @@ class UserType extends AbstractType
         ));
         $builder->add('evaluations', 'collection', array('type' => new MovieEvaluationType()));
 
+        /**
+         * @todo : move submit to template
+         */
         $builder->add('save', 'submit', array('label' => 'Register'));
     }
 

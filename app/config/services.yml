@@ -4,14 +4,23 @@ parameters:
 #    parameter_name: value
 
 services:
+    # TOOLS #
     app.slugger:
-        class: Massi\Tools\Slugger
+        class: AppBundle\Tools\Slugger
 
+    # FORMS #
     app.form.registration:
         class: AppBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: app_user_registration }
+    # CUSTOM FORM FIELDS TYPES
+    app.type.movie_selector:
+        class: AppBundle\Form\Type\MovieSelectorType
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+            - { name: form.type, alias: movie_selector }
 
+    # TRIGGERS #
     app.subscriber.file.upload:
         class: AppBundle\EventListener\FileUploadSubscriber
         tags:
