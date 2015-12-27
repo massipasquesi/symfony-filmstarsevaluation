@@ -14,18 +14,26 @@ class MoviesController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->moviesListAction();
+        return $this->moviesListAction($request);
     }
 
     /**
      * @Route("/movies/list", name="movies_list")
      */
-    public function moviesListAction()
+    public function moviesListAction(Request $request)
     {
-        $repository = $this->getDoctrine()
-            ->getRepository('AppBundle:Movie');
+        $query = $this->getDoctrine()
+            ->getRepository('AppBundle:Movie')
+            ->getAllMoviesQueryBuilder();
 
-        $movies = $repository->findAll();
+        //$movies = $repository->findAll();
+
+        $paginator  = $this->get('knp_paginator');
+        $movies = $paginator->paginate(
+            $query, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            Movie::NUM_ITEMS /*limit per page*/
+        );
 
         return $this->render('movies/list.html.twig', array('movies' => $movies));
     }

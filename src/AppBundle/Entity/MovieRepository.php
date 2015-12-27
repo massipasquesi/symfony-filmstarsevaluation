@@ -21,4 +21,13 @@ class MovieRepository extends EntityRepository
         return $this->getMoviesIdsListQueryBuilder()
             ->getQuery()->getArrayResult();
     }
+
+    public function getAllMoviesQueryBuilder()
+    {
+        return $this
+            ->createQueryBuilder('m')
+            ->select(array('m'))
+            //->addOrderBy('m.year', 'DESC')
+            ->orderBy('m.title', 'ASC');
+    }
 }
