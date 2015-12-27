@@ -30,7 +30,7 @@ class Movie
     /**
      * @ORM\Column(type="string")
      */
-    private $directeur;
+    private $director;
 
     /**
      * @ORM\Column(type="string")
@@ -101,27 +101,27 @@ class Movie
     }
 
     /**
-     * Set directeur
+     * Set director
      *
-     * @param string $directeur
+     * @param string $director
      *
      * @return Movie
      */
-    public function setDirecteur($directeur)
+    public function setDirecteur($director)
     {
-        $this->directeur = $directeur;
+        $this->director = $director;
 
         return $this;
     }
 
     /**
-     * Get directeur
+     * Get director
      *
      * @return string
      */
     public function getDirecteur()
     {
-        return $this->directeur;
+        return $this->director;
     }
 
     /**
@@ -204,5 +204,29 @@ class Movie
     public function getEvaluations()
     {
         return $this->evaluations;
+    }
+
+    /**
+     * Set director
+     *
+     * @param string $director
+     *
+     * @return Movie
+     */
+    public function setDirector($director)
+    {
+        $this->director = $director;
+
+        return $this;
+    }
+
+    /**
+     * Get director
+     *
+     * @return string
+     */
+    public function getDirector()
+    {
+        return $this->director;
     }
 }

@@ -3,7 +3,7 @@
 namespace AppBundle\EventListener;
 
 /**
- * @author PASQUESI Massimiliano <massipasquesi@gmail.com>
+ * @author MaSsI00 <massipasquesi@gmail.com>
  *
  * @method void preUpdate(LifecycleEventArgs $args)
  * @method void prePersist(LifecycleEventArgs $args)
@@ -106,6 +106,8 @@ abstract class AbstractFileUploadSubscriber extends AbstractSubscriberManager
             return;
         }
 
+        $this->processBeforeMove();
+
         // if there is an error when moving the file, an exception will
         // be automatically thrown by move(). This will properly prevent
         // the entity from being persisted to the database on error
@@ -120,6 +122,16 @@ abstract class AbstractFileUploadSubscriber extends AbstractSubscriberManager
         }
 
         $entity->emptyFile();
+    }
+
+    /**
+     * Override this method
+     * to do some stuff before moving the file
+     * @return [type] [description]
+     */
+    protected function processBeforeMove()
+    {
+        return;
     }
 
     /**

@@ -9,6 +9,9 @@ use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Exception\AppBundleException as Exception;
 
+/**
+ * @author MaSsI00 <massipasquesi@gmail.com>
+ */
 abstract class AbstractFixturesLoader extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     abstract public function getOrder();

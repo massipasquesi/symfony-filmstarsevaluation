@@ -32,7 +32,8 @@ class Category
     private $movies;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", mappedBy="categories", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $users;
 

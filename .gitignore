@@ -14,3 +14,4 @@
 *.standby
 /web/upload/avatars/
 !/web/upload/avatars/.gitkeep
+/web/assets/vendor/

@@ -8,6 +8,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @author MaSsI00 <massipasquesi@gmail.com>
+ */
 class MovieSelectorType extends AbstractType
 {
     private $manager;

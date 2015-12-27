@@ -5,17 +5,24 @@ namespace AppBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use AppBundle\Entity\User;
 
-class MovieType extends AbstractType
+/**
+ * @author MaSsI00 <massipasquesi@gmail.com>
+ */
+class MovieSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title')
-            ->add('director')
-            ->add('year')
-            ->add('evaluations')
-        ;
+        $builder->add('title');
+        $builder->add('director');
+        $builder->add('year');
+        $builder->add('user', 'entity', array(
+            'class'         => 'AppBundle:User',
+            'choice_label'  => 'username',
+            'expanded'      => false,
+            'multiple'      => false,
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -27,6 +34,6 @@ class MovieType extends AbstractType
 
     public function getName()
     {
-        return 'app_movie';
+        return 'movie_search';
     }
 }

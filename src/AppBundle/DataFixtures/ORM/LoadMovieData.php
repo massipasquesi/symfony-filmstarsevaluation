@@ -35,7 +35,7 @@ class LoadMovieData extends AbstractFixturesLoader
     {
         $this->header = array(
             'title',
-            'directeur',
+            'director',
             'year',
             'category' => 'category',
         );

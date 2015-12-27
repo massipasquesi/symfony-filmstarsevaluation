@@ -10,7 +10,7 @@ use Doctrine\Common\EventSubscriber;
 use AppBundle\Exception\EventListenerException as Exception;
 
 /**
- * @author PASQUESI Massimiliano <massipasquesi@gmail.com>
+ * @author MaSsI00 <massipasquesi@gmail.com>
  */
 abstract class AbstractSubscriberManager implements EventSubscriber
 {

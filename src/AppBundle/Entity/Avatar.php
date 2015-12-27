@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Avatar extends AbstractEntityFile
 {
+    const IMG_WIDTH = 125;
+    const IMG_HEIGHT = 85;
+
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="wrapper">
+        <div id="container">
+            <div id="title">
+                <h3>Liste des Films ({{ movies.getTotalItemCount }})</h3>
+            </div>
+
+            <table id="movie_list">
+                <thead>
+                <tr> {# sorting of properties based on query components #}
+                    <th>{{ knp_pagination_sortable(movies , 'Titre', 'm.title') }}</th>
+                    <th>{{ knp_pagination_sortable(movies , 'Réalisateur,', 'm.directeur') }}</th>
+                    <th>{{ knp_pagination_sortable(movies , 'Année', 'm.year') }}</th>
+                    <th>Categorie</th>
+                    <th>Evaluations</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for movie in movies %}
+                        <tr>
+                            <td>{{ movie.title }}</td>
+                            <td>{{ movie.directeur }}</td>
+                            <td>{{ movie.year }}</td>
+                            <td>{{ movie.category }}</td>
+                            <td>
+                                {% for evaluation in movie.evaluations %}
+                                    <p>{{evaluation.stars}}</p>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {# display navigation #}
+            <div class="pagination">
+            {{ knp_pagination_render(movies) }}
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
