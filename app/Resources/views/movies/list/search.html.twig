@@ -1,5 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+	<script src="{{ asset('js/app_specific.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     {{ form_start(form) }}
 	    {{ form_widget(form.title) }}

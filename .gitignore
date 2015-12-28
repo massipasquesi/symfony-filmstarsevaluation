@@ -14,4 +14,8 @@
 *.standby
 /web/upload/avatars/
 !/web/upload/avatars/.gitkeep
-/web/assets/vendor/
+/app/Resources/vendor/
+!/app/resources/vendor/.gitkeep
+/app/Resources/assets/
+!/app/resources/assets/js/.gitkeep
+/node_modules/

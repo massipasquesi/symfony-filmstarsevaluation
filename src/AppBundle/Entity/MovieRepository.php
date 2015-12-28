@@ -57,12 +57,12 @@ class MovieRepository extends EntityRepository
         $params = array();
 
         if (!empty($search->title)) {
-            $query .= 'AND m.title LIKE :title';
+            $query .= 'AND m.title LIKE :title%';
             $params['title'] = $title;
         }
 
         if (!empty($search->director)) {
-            $query .= 'AND m.director LIKE :director';
+            $query .= 'AND m.director LIKE :director%';
             $params['director'] = $director;
         }
 

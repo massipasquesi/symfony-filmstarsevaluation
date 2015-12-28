@@ -1,15 +1,15 @@
 {
   "name": "FilmStarsEvaluation",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "authors": [
-    "massi <massizero@gmail.com>"
+    "massizero <massipasquesi@gmail.com>"
   ],
-  "license": "MIT",
+  "license": "GNU",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "web/assets/vendor",
+    "app/Resources/vendor",
     "test",
     "tests"
   ],
