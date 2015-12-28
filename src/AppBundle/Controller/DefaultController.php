@@ -13,7 +13,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig');
+        $root_dir = $this->get('kernel')->getRootDir();
+        $readme_path = $root_dir . '/../' . 'README.html';
+
+        return $this->render('default/index.html.twig', array(
+            'readme_path' => $readme_path,
+        ));
     }
 
     /**
