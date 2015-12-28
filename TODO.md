@@ -1,6 +1,6 @@
 # @TODO
 
-*Liste de films filtré :*
+**Liste de films filtré :**
 
 * Traitement des données du return SUCCES AJAX
 * Affichage des informations de l'utilisateur dans la liste des films filtrés
