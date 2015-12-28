@@ -14,10 +14,10 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $root_dir = $this->get('kernel')->getRootDir();
-        $readme_path = $root_dir . '/../' . 'README.html';
+        $root_static_href_prefix = $root_dir . '/../';
 
         return $this->render('default/index.html.twig', array(
-            'readme_path' => $readme_path,
+            'root_static_href_prefix' => $root_static_href_prefix,
         ));
     }
 
