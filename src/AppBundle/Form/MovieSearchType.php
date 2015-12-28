@@ -14,9 +14,15 @@ class MovieSearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-        $builder->add('director');
-        $builder->add('year');
+        $builder->add('title', 'text', array(
+            'required' => false,
+        ));
+        $builder->add('director', 'text', array(
+            'required' => false,
+        ));
+        $builder->add('year', 'text', array(
+            'required' => false,
+        ));
         $builder->add('user', 'entity', array(
             'class'         => 'AppBundle:User',
             'choice_label'  => 'username',

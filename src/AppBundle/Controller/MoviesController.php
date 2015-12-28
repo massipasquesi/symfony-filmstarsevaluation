@@ -58,32 +58,6 @@ class MoviesController extends Controller
     }
 
     /**
-     * @Route("/movies/filter", name="movies_filter")
-     */
-    public function moviesSearchAction(Request $request)
-    {
-        $form = $this->createForm(new MovieSearchType());
-
-        if ($form->isValid()) {
-            $query = $this->getDoctrine()
-                ->getRepository('AppBundle:MovieSearch')
-                ->search($form->getData());
-
-            $movies = $query->getResult();
-        } else {
-            $movies = $this->getPaginatedSortableMoviesList($request);
-        }
-
-        return $this->render(
-            'movies/search.html.twig',
-            array(
-                'movies' => $movies,
-                'form' => $form->createView()
-            )
-        );
-    }
-
-    /**
      * @Route("/movies/list/filtered", name="movies_list_filtered")
      */
     public function moviesListFilteredAction(Request $request)

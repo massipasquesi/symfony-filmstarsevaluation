@@ -11,6 +11,12 @@
 	    {{ form_widget(form.year) }}
 	    {{ form_widget(form.user) }}
 
-		<input type="button" value="Filtrer" />
+	    {# Submit Button #}
+	    {% set vars = {'label': 'Submit'} %}
+		{% include ('@vcforms/submit.html.twig') with vars %}
+		{# Ajax Button #}
+		<input id="filter_button" type="button" value="Filtrer" />
     {{ form_end(form) }}
+
+    <div id="ajax_error"></div>
 {% endblock %}
